@@ -44,3 +44,6 @@ La sección de contenido del panel también administra las páginas informativas
 
 ## SEO, rendimiento y tráfico
 La publicación se prepara como frontend estático con build reproducible y CDN: HTML inicial con contenido público por ruta, metadatos title/description/Open Graph/Twitter/canonical, JSON-LD, robots.txt, sitemap.xml, manifest web, enlaces rastreables, WebP para el hero, `loading="lazy"` y `decoding="async"` para imágenes no críticas, además de caché inmutable para `/assets/*`. Admin y checkout quedan fuera del índice.
+
+## Legal, privacidad y HTTPS
+Se agregan Política de privacidad, Política de cookies, Términos y condiciones enlazados desde el sitio, aviso de consentimiento de cookies y política de cambios con plazo de 12 días. La Preview y la publicación Webdev usan HTTPS; el certificado TLS es gestionado por la plataforma. El contenido legal es una base editable que conviene revisar con asesoría jurídica antes de operar comercialmente.

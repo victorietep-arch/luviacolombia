@@ -19,3 +19,6 @@
 - El editor del panel permite modificar todas las páginas informativas, no solo la portada: Nosotros, Contacto, Envíos, Cambios, Preguntas frecuentes y Términos, con textos, bloques, preguntas/respuestas e imágenes.
 - El sitio incluye SEO técnico por ruta, sitemap, robots, datos estructurados, enlaces rastreables y optimización de imágenes.
 - La publicación está configurada para build estático con CDN y caché inmutable de assets versionados; falta publicar explícitamente y reemplazar el dominio de Preview por el dominio final cuando exista.
+- El sitio muestra Política de privacidad, Política de cookies, Términos y condiciones y aviso de consentimiento.
+- La política de cambios y devoluciones indica 12 días.
+- HTTPS/TLS queda gestionado por Webdev en la URL pública; el dominio final debe conservar HTTPS.
