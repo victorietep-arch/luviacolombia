@@ -84,3 +84,6 @@ La carga administrativa conserva los datos previos cuando una consulta auxiliar 
 
 ## Cuenta y favoritos
 Mi cuenta permite actualizar el nombre en el perfil de Supabase. Favoritos abre una página con las tarjetas reales guardadas, permite quitar prendas y conserva el estado local del navegador.
+
+## Cuenta con historial visible
+La cuenta muestra primero nombre, correo e historial de pedidos; la edición se abre únicamente mediante “Editar mi información”. Los pedidos se consultan por el correo autenticado, con estado, artículos, total y guía.

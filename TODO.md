@@ -47,3 +47,5 @@
 - Panel de pedidos con estado y número de guía editables.
 - Mi cuenta actualiza el nombre del perfil con Supabase.
 - Favoritos muestra las prendas guardadas y permite quitarlas, en lugar de mostrar solo un contador.
+- Cuenta muestra información y pedidos antes de abrir el editor.
+- Historial de pedidos visible para el correo autenticado con estado, total y guía.

@@ -29,6 +29,7 @@ create table if not exists public.products (
 
 create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users(id) on delete set null,
   order_number text unique not null,
   customer_name text not null,
   email text not null,
@@ -101,6 +102,8 @@ drop policy if exists "orders public insert" on public.orders;
 create policy "orders public insert" on public.orders for insert to anon, authenticated with check (true);
 drop policy if exists "orders admin read" on public.orders;
 create policy "orders admin read" on public.orders for select to authenticated using (public.is_admin());
+drop policy if exists "orders own read" on public.orders;
+create policy "orders own read" on public.orders for select to authenticated using (email = (auth.jwt()->>'email'));
 drop policy if exists "orders admin update" on public.orders;
 create policy "orders admin update" on public.orders for update to authenticated using (public.is_admin()) with check (public.is_admin());
 
