@@ -69,3 +69,6 @@ El footer móvil usa un gradiente Liquid Glass azul-lila con tipografía oscura 
 
 ## Cuenta Luvia y móvil
 Se crea la ruta Cuenta Luvia con inicio de sesión y registro usando Supabase Auth, además de una vista de cuenta activa. En móvil se usan colores más saturados y tipografía más contrastada; el buscador mantiene 16px para evitar el zoom automático de iOS.
+
+## Acceso alternable y banner vivo
+Cuenta Luvia muestra una sola vista a la vez: inicio de sesión o registro, con un botón para alternar. La franja superior repite sus beneficios en un carrusel horizontal continuo y pulsa con un brillo suave.

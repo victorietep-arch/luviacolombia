@@ -36,3 +36,5 @@
 - Corregida la visibilidad inferior de Edición especial en pantallas pequeñas.
 - Cuenta Luvia creada con inicio de sesión, registro y cierre de sesión mediante Supabase Auth.
 - Contraste móvil reforzado y buscador estabilizado para evitar zoom automático.
+- Inicio de sesión y registro separados mediante alternancia, sin mostrar ambos formularios juntos.
+- Banner superior animado con desplazamiento continuo y brillo pulsante.
