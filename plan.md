@@ -47,3 +47,6 @@ La publicación se prepara como frontend estático con build reproducible y CDN:
 
 ## Legal, privacidad y HTTPS
 Se agregan Política de privacidad, Política de cookies, Términos y condiciones enlazados desde el sitio, aviso de consentimiento de cookies y política de cambios con plazo de 12 días. La Preview y la publicación Webdev usan HTTPS; el certificado TLS es gestionado por la plataforma. El contenido legal es una base editable que conviene revisar con asesoría jurídica antes de operar comercialmente.
+
+## Contacto, newsletter y panel modular
+Los formularios de contacto y newsletter guardan datos en Supabase mediante inserción pública restringida por RLS. El panel administrativo consulta esas bandejas únicamente para usuarios admin y se divide en pestañas de Productos, Pedidos, Contenido, Mensajes y Suscriptores; los mensajes permiten cambiar estado.

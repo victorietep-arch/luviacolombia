@@ -22,3 +22,5 @@
 - El sitio muestra Política de privacidad, Política de cookies, Términos y condiciones y aviso de consentimiento.
 - La política de cambios y devoluciones indica 12 días.
 - HTTPS/TLS queda gestionado por Webdev en la URL pública; el dominio final debe conservar HTTPS.
+- Ejecutar `supabase/contact-newsletter-migration.sql` en Supabase SQL Editor para activar las tablas y políticas de contacto/newsletter.
+- El panel administrativo queda dividido en pestañas y muestra mensajes y suscriptores guardados en Supabase.
