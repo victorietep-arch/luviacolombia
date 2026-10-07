@@ -8,3 +8,7 @@
 - El carrito permite editar cantidades, eliminar artículos, ver subtotal y recibir información de envío.
 - El checkout simulado solicita datos de entrega, muestra resumen del pedido y confirma la orden sin procesar pagos reales ni pedir tarjeta.
 - La experiencia funciona en móvil, tableta y escritorio, con navegación consistente, estados visibles y accesibilidad básica.
+
+- El sitio usa un acabado Liquid Glass visible con transparencias, desenfoque, bordes luminosos, profundidad, reflejos sutiles y halos iridiscentes.
+- Los enlaces de Nosotros, Contacto, Envíos y entregas, Cambios y devoluciones, Preguntas frecuentes y Términos y condiciones abren páginas propias y no regresan al inicio.
+- La página de Contacto permite enviar un mensaje y muestra una confirmación visual.

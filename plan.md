@@ -31,3 +31,7 @@ Tienda web responsive de moda colombiana con catálogo navegable, búsqueda, fil
 - `public/manus-routes.json`: rutas declaradas para Preview.
 - `app.config.ts`: metadato de logo del proyecto.
 - `TODO.md`: criterios de entrega derivados de la solicitud.
+
+
+## Actualización de navegación y acabado visual
+La iteración final añade una capa Liquid Glass con blur, saturación, bordes perlados, reflejos en movimiento y halos iridiscentes. También incorpora rutas independientes para Nosotros, Contacto, Envíos y entregas, Cambios y devoluciones, Preguntas frecuentes y Términos y condiciones; cada una conserva el header/footer de la tienda y sus propios contenidos. Contacto incluye un formulario funcional con confirmación visual.
