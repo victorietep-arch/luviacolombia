@@ -58,3 +58,5 @@ El editor de Contenido incluye URLs de Instagram, Facebook, TikTok y YouTube. El
 La pestaña Pedidos incluye filtros Todos, Nuevos, Confirmados, Preparando, Enviados, Entregados y Cancelados con contadores. La pestaña Mensajes muestra un aviso accionable si la migración de Supabase aún no está aplicada.
 
 La bandeja de mensajes ahora se organiza con filtros Todos, Nuevos, Leídos, Respondidos y Archivados, cada uno con contador.
+
+El selector de estado de mensajes usa `change`, persiste el estado en Supabase y refresca la bandeja tras guardar.
