@@ -32,3 +32,5 @@
 - Corregido el cambio de estado de mensajes para persistir al seleccionar Respondido, Leído o Archivado.
 - Mejorado el contraste del Liquid Glass en móvil.
 - Los cambios de estado de pedidos y mensajes ya no desmontan el selector durante la actualización.
+- Corregido el footer móvil para evitar el bloque blanco y mejorar el contraste.
+- Corregida la visibilidad inferior de Edición especial en pantallas pequeñas.

@@ -63,3 +63,6 @@ El selector de estado de mensajes usa `change`, persiste el estado en Supabase y
 
 ## Mobile y estados operativos
 En pantallas móviles, los paneles Liquid Glass elevan opacidad y contraste tipográfico sin perder el desenfoque. Los selectores de estado de pedidos y mensajes se deshabilitan solo durante la petición, conservan la selección y revierten con un error visible si Supabase rechaza la actualización; no se reconstruye la pantalla al guardar.
+
+## Ajuste visual móvil final
+El footer móvil usa un gradiente Liquid Glass azul-lila con tipografía oscura y enlaces de redes contrastados. La sección Edición especial separa imagen y contenido con fondo claro, texto oscuro y puntos destacados legibles.
