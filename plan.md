@@ -35,3 +35,7 @@ Tienda web responsive de moda colombiana con catálogo navegable, búsqueda, fil
 
 ## Actualización de navegación y acabado visual
 La iteración final añade una capa Liquid Glass con blur, saturación, bordes perlados, reflejos en movimiento y halos iridiscentes. También incorpora rutas independientes para Nosotros, Contacto, Envíos y entregas, Cambios y devoluciones, Preguntas frecuentes y Términos y condiciones; cada una conserva el header/footer de la tienda y sus propios contenidos. Contacto incluye un formulario funcional con confirmación visual.
+
+
+## Persistencia y operación con Supabase
+La tienda usa las variables protegidas `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`. El archivo `supabase/schema.sql` define perfiles, productos, pedidos, líneas de pedido, RLS y el bucket público de imágenes. El storefront lee el catálogo persistente y registra cada checkout en Supabase. La ruta `/admin` usa Supabase Auth y el rol `admin` de `profiles` para crear, editar y eliminar productos, subir imágenes, revisar inventario y actualizar el estado de las órdenes.

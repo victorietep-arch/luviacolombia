@@ -1,6 +1,7 @@
 import './styles.css';
+import { supabase, isSupabaseConfigured, mapProduct, mapProductPayload, uploadProductImage } from './supabase.js';
 
-const products = [
+let products = [
   { id:'buzo-oversize', name:'Buzo Oversize Luvia', category:'Mujer', price:89900, oldPrice:109900, tag:'Más vendido', image:'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85'], colors:['Lavanda','Blanco'], sizes:['XS','S','M','L'], description:'Silueta amplia, suave y ligera para acompañarte en todos tus planes. Algodón premium con interior afelpado.' },
   { id:'camiseta-premium', name:'Camiseta Premium', category:'Camisetas', price:59900, tag:'Esencial', image:'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=900&q=85'], colors:['Negro','Marfil','Azul nube'], sizes:['XS','S','M','L','XL'], description:'La camiseta que resuelve el día. Corte limpio, algodón peinado y una textura que se siente tan bien como se ve.' },
   { id:'pantalon-cargo', name:'Pantalón Cargo', category:'Pantalones', price:79900, image:'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=900&q=85'], colors:['Azul hielo','Arena'], sizes:['28','30','32','34','36'], description:'Volumen relajado y bolsillos utilitarios para moverte con libertad. Un nuevo clásico para todos los días.' },
@@ -41,7 +42,7 @@ const icons = {
 };
 const icon = name => icons[name] || '';
 const money = value => new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(value).replace('COP','').trim() + ' COP';
-const state = { search:'', category:'Todos', sort:'featured', heroSlide:0, cart: JSON.parse(localStorage.getItem('luvia-cart') || '[]'), favorites: JSON.parse(localStorage.getItem('luvia-favorites') || '[]'), detail:null, cartOpen:false, checkout:false, mobileNav:false };
+const state = { search:'', category:'Todos', sort:'featured', heroSlide:0, cart: JSON.parse(localStorage.getItem('luvia-cart') || '[]'), favorites: JSON.parse(localStorage.getItem('luvia-favorites') || '[]'), detail:null, cartOpen:false, checkout:false, mobileNav:false, user:null, profile:null, isAdmin:false, adminProducts:[], adminOrders:[], editingProduct:null, adminBusy:false, dbError:'' };
 
 const app = document.querySelector('#app');
 const toastRegion = document.querySelector('#toast-region');
@@ -49,6 +50,74 @@ const saveState = () => { localStorage.setItem('luvia-cart', JSON.stringify(stat
 const cartCount = () => state.cart.reduce((sum,item)=>sum+item.qty,0);
 const cartTotal = () => state.cart.reduce((sum,item)=>sum+item.price*item.qty,0);
 const toast = message => { const el=document.createElement('div'); el.className='toast'; el.textContent=message; toastRegion.append(el); setTimeout(()=>el.remove(),3200); };
+
+
+async function loadProducts() {
+  if (!supabase) return;
+  const { data, error } = await supabase.from('products').select('*').eq('active', true).order('created_at', { ascending: false });
+  if (error) { state.dbError = error.message; return; }
+  products = (data || []).map(mapProduct);
+}
+
+async function refreshSession() {
+  if (!supabase) return;
+  const { data } = await supabase.auth.getSession();
+  state.user = data.session?.user || null;
+  state.profile = null;
+  state.isAdmin = false;
+  if (state.user) {
+    const profile = await supabase.from('profiles').select('role,full_name').eq('id', state.user.id).maybeSingle();
+    state.profile = profile.data || null;
+    state.isAdmin = profile.data?.role === 'admin';
+  }
+}
+
+async function loadAdminData() {
+  if (!supabase || !state.isAdmin) return;
+  state.adminBusy = true;
+  const [productResult, orderResult] = await Promise.all([
+    supabase.from('products').select('*').order('created_at', { ascending: false }),
+    supabase.from('orders').select('*, order_items(*)').order('created_at', { ascending: false })
+  ]);
+  state.adminProducts = (productResult.data || []).map(mapProduct);
+  state.adminOrders = orderResult.data || [];
+  state.adminBusy = false;
+  if (productResult.error || orderResult.error) state.dbError = productResult.error?.message || orderResult.error?.message || '';
+}
+
+const orderNumber = () => `LV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000000)).padStart(6, '0')}`;
+
+async function saveOrder(form) {
+  const number = orderNumber();
+  if (!supabase) return number;
+  const shipping = cartTotal() >= 180000 ? 0 : 9900;
+  const payload = {
+    order_number: number,
+    customer_name: form.get('name'),
+    email: form.get('email'),
+    phone: form.get('phone'),
+    address: form.get('address'),
+    city: form.get('city'),
+    subtotal: cartTotal(),
+    shipping,
+    total: cartTotal() + shipping,
+    status: 'new'
+  };
+  const { data: order, error } = await supabase.from('orders').insert(payload).select('id,order_number').single();
+  if (error) throw error;
+  const items = state.cart.map(item => ({ order_id: order.id, product_id: item.id, product_name: item.name, price: item.price, quantity: item.qty, color: item.color, size: item.size, image: item.image }));
+  const itemResult = await supabase.from('order_items').insert(items);
+  if (itemResult.error) throw itemResult.error;
+  return order.order_number;
+}
+
+function adminPage() {
+  if (!isSupabaseConfigured) return `<main class="admin-page section-shell"><section class="liquid-panel admin-empty"><span class="eyebrow">PANEL ADMINISTRATIVO</span><h1>Conecta Supabase para empezar.</h1><p>Configura las variables protegidas del proyecto y ejecuta <code>supabase/schema.sql</code> en Supabase.</p></section></main>`;
+  if (!state.user) return `<main class="admin-page section-shell"><section class="admin-login liquid-panel"><span class="eyebrow">ACCESO PRIVADO</span><h1>Panel administrativo.</h1><p>Inicia sesión con el usuario administrador de tu proyecto Supabase.</p><form id="admin-login-form" class="checkout-form"><label>Correo electrónico<input name="email" type="email" required placeholder="admin@tu-marca.com" autocomplete="email"></label><label>Contraseña<input name="password" type="password" required placeholder="••••••••" autocomplete="current-password"></label><button class="primary-btn full-btn" type="submit">Entrar al panel ${icon('arrow')}</button></form><p class="admin-hint">El usuario debe existir en Supabase Auth y tener el rol admin en la tabla profiles.</p></section></main>`;
+  if (!state.isAdmin) return `<main class="admin-page section-shell"><section class="liquid-panel admin-empty"><span class="eyebrow">ACCESO RESTRINGIDO</span><h1>Tu cuenta aún no es administradora.</h1><p>Inicia sesión con un usuario que tenga el rol <strong>admin</strong> en la tabla <strong>profiles</strong>.</p><button class="outline-btn" data-action="signout">Cerrar sesión ${icon('arrow')}</button></section></main>`;
+  const p=state.editingProduct || {};
+  return `<main class="admin-page section-shell"><div class="admin-head"><div><span class="eyebrow">PANEL ADMINISTRATIVO</span><h1>Tu operación, <em>en orden.</em></h1><p>Productos, inventario y pedidos de Luvia Colombia.</p></div><button class="outline-btn" data-action="signout">Cerrar sesión ${icon('close')}</button></div>${state.dbError?`<div class="admin-alert">${state.dbError}</div>`:''}<div class="admin-grid"><section class="liquid-panel admin-editor"><div class="admin-section-title"><div><span class="eyebrow">${state.editingProduct?'EDITAR PRODUCTO':'NUEVO PRODUCTO'}</span><h2>${state.editingProduct?'Actualiza tu producto':'Sube una nueva pieza'}</h2></div>${state.editingProduct?'<button class="text-btn" data-action="cancel-product-edit">Cancelar</button>':''}</div><form id="product-form" data-id="${p.id||''}" class="checkout-form"><div class="form-grid"><label>Nombre<input name="name" required value="${p.name||''}" placeholder="Buzo Oversize Luvia"></label><label>Slug<input name="slug" required value="${p.slug||''}" placeholder="buzo-oversize"></label><label>Categoría<select name="category" required>${['Hombre','Mujer','Chaquetas','Camisetas','Pantalones','Accesorios'].map(c=>`<option ${p.category===c?'selected':''}>${c}</option>`).join('')}</select></label><label>Precio COP<input name="price" type="number" min="0" required value="${p.price||''}" placeholder="89900"></label><label>Precio anterior<input name="old_price" type="number" min="0" value="${p.oldPrice||''}" placeholder="109900"></label><label>Inventario<input name="stock" type="number" min="0" required value="${p.stock||0}"></label><label>Etiqueta<input name="tag" value="${p.tag||''}" placeholder="Nuevo"></label><label>Imagen desde URL<input name="image" value="${p.image||''}" placeholder="https://..."></label><label class="full-field">Subir imagen<input id="product-image-file" name="image_file" type="file" accept="image/*"></label><label>Colores<input name="colors" required value="${(p.colors||[]).join(', ')}" placeholder="Negro, Blanco"></label><label>Tallas<input name="sizes" required value="${(p.sizes||[]).join(', ')}" placeholder="S, M, L"></label><label class="full-field">Descripción<textarea name="description" required placeholder="Describe la pieza">${p.description||''}</textarea></label></div><button class="primary-btn full-btn" type="submit">${state.editingProduct?'Guardar cambios':'Agregar producto'} ${icon('arrow')}</button></form></section><section class="liquid-panel admin-list"><div class="admin-section-title"><div><span class="eyebrow">CATÁLOGO</span><h2>${state.adminProducts.length} productos</h2></div><span class="admin-chip">Inventario</span></div><div class="admin-products">${state.adminProducts.length?state.adminProducts.map(item=>`<div class="admin-product-row"><img src="${item.image||'/luvia-reference-hero.jpg'}" alt=""><div><strong>${item.name}</strong><small>${item.category} · ${money(item.price)} · ${item.stock} disponibles</small></div><button class="icon-btn" data-action="edit-product" data-id="${item.id}" aria-label="Editar ${item.name}">✎</button><button class="icon-btn danger" data-action="delete-product" data-id="${item.id}" aria-label="Eliminar ${item.name}">×</button></div>`).join(''):'<div class="admin-empty-inline">Aún no hay productos en Supabase. Agrega el primero desde el formulario.</div>'}</div></section></div><section class="liquid-panel admin-orders"><div class="admin-section-title"><div><span class="eyebrow">PEDIDOS</span><h2>${state.adminOrders.length} órdenes recibidas</h2></div><button class="outline-btn" data-action="refresh-admin">Actualizar ${icon('refresh')}</button></div><div class="orders-table">${state.adminOrders.length?state.adminOrders.map(order=>`<article class="order-row"><div class="order-main"><strong>${order.order_number}</strong><span>${order.customer_name} · ${order.city}</span><small>${new Date(order.created_at).toLocaleString('es-CO')} · ${order.order_items?.length||0} líneas</small></div><div class="order-total">${money(order.total)}<select data-action="update-status" data-id="${order.id}" aria-label="Estado de ${order.order_number}">${['new','confirmed','preparing','shipped','delivered','cancelled'].map(status=>`<option value="${status}" ${order.status===status?'selected':''}>${status==='new'?'Nuevo':status==='confirmed'?'Confirmado':status==='preparing'?'Preparando':status==='shipped'?'Enviado':status==='delivered'?'Entregado':'Cancelado'}</option>`).join('')}</select></div></article>`).join(''):'<div class="admin-empty-inline">Todavía no hay pedidos registrados. Cuando llegue el primero aparecerá aquí.</div>'}</div></section></main>`;
+}
 
 function productCard(product) {
   const liked = state.favorites.includes(product.id);
@@ -144,11 +213,11 @@ function render() {
   const path=hashPath || urlPath;
   const checkoutRoute=path==='checkout';
   const infoRoutes=['nosotros','contacto','envios','cambios','faq','terminos'];
-  const page = state.checkout || checkoutRoute ? homePage() : path==='tienda'?storePage():infoRoutes.includes(path)?infoPage(path):homePage();
+  const page = state.checkout || checkoutRoute ? homePage() : path==='tienda'?storePage():path==='admin'?adminPage():infoRoutes.includes(path)?infoPage(path):homePage();
   app.innerHTML = header()+page+footer()+detailModal()+cartDrawer()+checkoutModal(checkoutRoute);
   bindEvents();
 }
-function footer() { return `<footer class="site-footer" id="contacto"><div class="footer-brand"><a class="brand" href="#inicio"><span>Luvia</span><small>COLOMBIA</small></a><p>Moda que se adapta a ti.</p></div><div class="footer-col"><strong>Enlaces rápidos</strong><a href="#inicio">Inicio</a><a href="#tienda">Tienda</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a></div><div class="footer-col"><strong>Ayuda</strong><a href="#envios">Envíos y entregas</a><a href="#cambios">Cambios y devoluciones</a><a href="#faq">Preguntas frecuentes</a><a href="#terminos">Términos y condiciones</a></div><div class="footer-col contact-col"><strong>Contáctanos</strong><span>✆ +57 300 123 4567</span><span>✉ hola@luvia.com</span><span>⌖ Colombia</span></div><div class="footer-news"><strong>Síguenos</strong><div class="socials"><button aria-label="Instagram">◎</button><button aria-label="Facebook">f</button><button aria-label="TikTok">♪</button><button aria-label="YouTube">▶</button></div><label>Suscríbete y recibe novedades<input type="email" placeholder="Tu correo electrónico"><button aria-label="Suscribirse">→</button></label></div><div class="footer-bottom"><span>© 2026 Luvia Colombia. Todos los derechos reservados.</span><span>Hecho para vestir tu ritmo.</span></div></footer>`; }
+function footer() { return `<footer class="site-footer" id="contacto"><div class="footer-brand"><a class="brand" href="#inicio"><span>Luvia</span><small>COLOMBIA</small></a><p>Moda que se adapta a ti.</p></div><div class="footer-col"><strong>Enlaces rápidos</strong><a href="#inicio">Inicio</a><a href="#tienda">Tienda</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a><a href="#admin">Panel administrativo</a></div><div class="footer-col"><strong>Ayuda</strong><a href="#envios">Envíos y entregas</a><a href="#cambios">Cambios y devoluciones</a><a href="#faq">Preguntas frecuentes</a><a href="#terminos">Términos y condiciones</a></div><div class="footer-col contact-col"><strong>Contáctanos</strong><span>✆ +57 300 123 4567</span><span>✉ hola@luvia.com</span><span>⌖ Colombia</span></div><div class="footer-news"><strong>Síguenos</strong><div class="socials"><button aria-label="Instagram">◎</button><button aria-label="Facebook">f</button><button aria-label="TikTok">♪</button><button aria-label="YouTube">▶</button></div><label>Suscríbete y recibe novedades<input type="email" placeholder="Tu correo electrónico"><button aria-label="Suscribirse">→</button></label></div><div class="footer-bottom"><span>© 2026 Luvia Colombia. Todos los derechos reservados.</span><span>Hecho para vestir tu ritmo.</span></div></footer>`; }
 
 function addToCart(id, qty=1, options={}) { const p=products.find(item=>item.id===id); if(!p)return; const key=id+'-'+(options.color||p.colors[0])+'-'+(options.size||p.sizes[0]); const found=state.cart.find(item=>item.key===key); if(found)found.qty+=qty; else state.cart.push({key,id,name:p.name,price:p.price,image:p.image,qty,color:options.color||p.colors[0],size:options.size||p.sizes[0]}); saveState(); state.cartOpen=true; state.detail=null; render(); toast(`${p.name} se añadió a tu carrito`); }
 function bindEvents() {
@@ -178,12 +247,24 @@ function bindEvents() {
     if(action==='scroll-store'){location.hash='tienda';render();window.scrollTo({top:0,behavior:'smooth'});}
     if(action==='account'){toast('Próximamente: tu cuenta Luvia');}
     if(action==='favorites'){toast(state.favorites.length?`Tienes ${state.favorites.length} favoritos guardados`:'Aún no tienes favoritos');}
+    if(action==='signout'){supabase?.auth.signOut();state.user=null;state.profile=null;state.isAdmin=false;render();}
+    if(action==='edit-product'){state.editingProduct=state.adminProducts.find(item=>item.id===target.dataset.id)||null;render();window.scrollTo({top:0,behavior:'smooth'});}
+    if(action==='cancel-product-edit'){state.editingProduct=null;render();}
+    if(action==='delete-product'){if(!supabase||!state.isAdmin)return;if(window.confirm('¿Eliminar este producto del catálogo?')){supabase.from('products').delete().eq('id',target.dataset.id).then(async({error})=>{if(error)toast(error.message);else{toast('Producto eliminado');state.editingProduct=null;await loadAdminData();await loadProducts();render();}});}}
+    if(action==='refresh-admin'){loadAdminData().then(()=>render());}
     if(action==='about'){location.hash='nosotros';render();window.scrollTo({top:0,behavior:'smooth'});}
   }));
   document.querySelector('#global-search')?.addEventListener('input', e=>{state.search=e.target.value; if(location.hash!=='#tienda')location.hash='tienda'; render(); const input=document.querySelector('#global-search');input?.focus();input?.setSelectionRange(input.value.length,input.value.length);});
   document.querySelector('#sort-products')?.addEventListener('change', e=>{state.sort=e.target.value;render();});
+  document.querySelector('#admin-login-form')?.addEventListener('submit', async e=>{e.preventDefault();const form=new FormData(e.currentTarget);const {error}=await supabase.auth.signInWithPassword({email:form.get('email'),password:form.get('password')});if(error){toast(error.message);return;}await refreshSession();await loadAdminData();render();});
+  document.querySelector('#product-form')?.addEventListener('submit', async e=>{e.preventDefault();if(!supabase||!state.isAdmin)return;const form=new FormData(e.currentTarget);const file=document.querySelector('#product-image-file')?.files?.[0];try{state.adminBusy=true;const image=await uploadProductImage(file);const payload=mapProductPayload({name:form.get('name'),slug:form.get('slug'),category:form.get('category'),price:form.get('price'),old_price:form.get('old_price'),stock:form.get('stock'),tag:form.get('tag'),image:form.get('image'),colors:form.get('colors'),sizes:form.get('sizes'),description:form.get('description')},image);const id=e.currentTarget.dataset.id;const result=id?await supabase.from('products').update(payload).eq('id',id):await supabase.from('products').insert(payload);if(result.error)throw result.error;toast(id?'Producto actualizado':'Producto agregado');state.editingProduct=null;await loadAdminData();await loadProducts();render();}catch(error){toast('No se pudo guardar: '+error.message);}finally{state.adminBusy=false;}});
+  document.querySelectorAll('[data-action="update-status"]').forEach(select=>select.addEventListener('change',async e=>{const {error}=await supabase.from('orders').update({status:e.currentTarget.value}).eq('id',e.currentTarget.dataset.id);if(error)toast(error.message);else toast('Estado del pedido actualizado');}));
   document.querySelector('#contact-form')?.addEventListener('submit', e=>{e.preventDefault();e.currentTarget.reset();toast('Mensaje enviado. Te responderemos pronto.');});
-  document.querySelector('#checkout-form')?.addEventListener('submit', e=>{e.preventDefault();const form=new FormData(e.currentTarget);if(!form.get('name')||!form.get('email')||!form.get('address')||!form.get('city')||!form.get('phone'))return;document.querySelector('.checkout-modal')?.parentElement?.remove();app.insertAdjacentHTML('beforeend',confirmationModal('LV-'+new Date().getFullYear()+'-'+Date.now().toString().slice(-6)));document.querySelector('[data-action="finish-order"]')?.addEventListener('click',()=>{state.checkout=false;state.cart=[];saveState();render();});});
+  document.querySelector('#checkout-form')?.addEventListener('submit', async e=>{e.preventDefault();const form=new FormData(e.currentTarget);if(!form.get('name')||!form.get('email')||!form.get('address')||!form.get('city')||!form.get('phone'))return;try{const number=await saveOrder(form);document.querySelector('.checkout-modal')?.parentElement?.remove();app.insertAdjacentHTML('beforeend',confirmationModal(number));document.querySelector('[data-action="finish-order"]')?.addEventListener('click',()=>{state.checkout=false;state.cart=[];saveState();render();});}catch(error){toast('No pudimos registrar el pedido: '+error.message);}});
 }
 window.addEventListener('hashchange',()=>{ if(!state.checkout){state.detail=null;render();window.scrollTo({top:0,behavior:'smooth'});}});
 render();
+if (supabase) {
+  supabase.auth.onAuthStateChange(async (_event, session) => { state.user=session?.user||null; await refreshSession(); if(location.hash==='#admin') { await loadAdminData(); render(); } });
+  Promise.all([loadProducts(), refreshSession()]).then(async()=>{ if(location.hash==='#admin') await loadAdminData(); render(); });
+}
