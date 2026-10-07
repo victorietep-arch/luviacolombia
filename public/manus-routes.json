@@ -51,6 +51,10 @@
     {
       "path": "/cuenta",
       "title": "Cuenta Luvia"
+    },
+    {
+      "path": "/seguimiento",
+      "title": "Consultar pedido — Luvia Colombia"
     }
   ]
 }

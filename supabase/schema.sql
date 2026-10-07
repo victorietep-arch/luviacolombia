@@ -41,6 +41,8 @@ create table if not exists public.orders (
   shipping integer not null default 0,
   total integer not null default 0,
   status text not null default 'new' check (status in ('new','confirmed','preparing','shipped','delivered','cancelled')),
+  tracking_number text,
+  updated_at timestamptz not null default now(),
   created_at timestamptz not null default now()
 );
 
@@ -179,3 +181,13 @@ grant insert on table public.contact_messages to anon, authenticated;
 grant select, update on table public.contact_messages to authenticated;
 grant insert on table public.newsletter_subscribers to anon, authenticated;
 grant select, update on table public.newsletter_subscribers to authenticated;
+
+
+-- Consulta pública limitada al estado, transportadora y guía, sin exponer datos personales.
+create or replace function public.track_order(p_order_number text)
+returns table(order_number text, status text, tracking_number text, shipping_carrier text, created_at timestamptz)
+language sql security definer set search_path = public as $$
+  select o.order_number, o.status, o.tracking_number, o.shipping_carrier, o.created_at
+  from public.orders o where upper(o.order_number)=upper(trim(p_order_number)) limit 1;
+$$;
+grant execute on function public.track_order(text) to anon, authenticated;
