@@ -38,3 +38,5 @@
 - Contraste móvil reforzado y buscador estabilizado para evitar zoom automático.
 - Inicio de sesión y registro separados mediante alternancia, sin mostrar ambos formularios juntos.
 - Banner superior animado con desplazamiento continuo y brillo pulsante.
+- Banner de beneficios sin espacios en escritorio mediante cuatro grupos repetidos.
+- Sugerencia del buscador ocultada en cuanto el usuario escribe.

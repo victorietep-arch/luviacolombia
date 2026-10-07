@@ -72,3 +72,6 @@ Se crea la ruta Cuenta Luvia con inicio de sesión y registro usando Supabase Au
 
 ## Acceso alternable y banner vivo
 Cuenta Luvia muestra una sola vista a la vez: inicio de sesión o registro, con un botón para alternar. La franja superior repite sus beneficios en un carrusel horizontal continuo y pulsa con un brillo suave.
+
+## Banner y sugerencia de búsqueda
+El banner usa cuatro grupos idénticos y se desplaza un cuarto de su ancho total para mantener cobertura continua también en escritorio. La sugerencia inline se oculta inmediatamente mediante estado visual al escribir cualquier carácter.
