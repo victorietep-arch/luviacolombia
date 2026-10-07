@@ -28,3 +28,4 @@
 - Las URLs de Instagram, Facebook, TikTok y YouTube se editan desde Contenido y se muestran en el footer.
 - Los pedidos se filtran y organizan por estado con contadores visibles.
 - Si la bandeja de mensajes no existe en Supabase, el panel indica ejecutar la migración correspondiente.
+- Los mensajes se filtran por Todos, Nuevos, Leídos, Respondidos y Archivados con contadores visibles.
