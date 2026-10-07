@@ -41,3 +41,6 @@ La iteración final añade una capa Liquid Glass con blur, saturación, bordes p
 La tienda usa las variables protegidas `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`. El archivo `supabase/schema.sql` define perfiles, productos, pedidos, líneas de pedido, RLS y el bucket público de imágenes. El storefront lee el catálogo persistente y registra cada checkout en Supabase. La ruta `/admin` usa Supabase Auth y el rol `admin` de `profiles` para crear, editar y eliminar productos, subir imágenes, revisar inventario y actualizar el estado de las órdenes.
 
 La sección de contenido del panel también administra las páginas informativas Nosotros, Contacto, Envíos y entregas, Cambios y devoluciones, Preguntas frecuentes y Términos y condiciones, incluyendo sus textos, bloques, preguntas, respuestas e imágenes.
+
+## SEO, rendimiento y tráfico
+La publicación se prepara como frontend estático con build reproducible y CDN: HTML inicial con contenido público por ruta, metadatos title/description/Open Graph/Twitter/canonical, JSON-LD, robots.txt, sitemap.xml, manifest web, enlaces rastreables, WebP para el hero, `loading="lazy"` y `decoding="async"` para imágenes no críticas, además de caché inmutable para `/assets/*`. Admin y checkout quedan fuera del índice.

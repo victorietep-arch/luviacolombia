@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /checkout
+Sitemap: https://8328-i6g4bpvfoosgprmnytv4b-a565cc95.us4.manus.computer/sitemap.xml

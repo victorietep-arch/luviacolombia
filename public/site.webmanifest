@@ -1,0 +1,13 @@
+{
+  "name": "Luvia Colombia",
+  "short_name": "Luvia",
+  "description": "Moda que se adapta a tu estilo.",
+  "lang": "es-CO",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4e8f7",
+  "theme_color": "#f4e8f7",
+  "icons": [
+    {"src":"/luvia-reference-hero.webp","sizes":"512x512","type":"image/webp","purpose":"any maskable"}
+  ]
+}

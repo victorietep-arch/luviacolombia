@@ -17,3 +17,5 @@
 - `/admin` requiere autenticación de Supabase y rol `admin`; permite crear, editar y eliminar productos, subir imágenes, controlar inventario y actualizar estados de pedidos.
 - `supabase/schema.sql` contiene el esquema, las políticas RLS y la configuración de almacenamiento de imágenes.
 - El editor del panel permite modificar todas las páginas informativas, no solo la portada: Nosotros, Contacto, Envíos, Cambios, Preguntas frecuentes y Términos, con textos, bloques, preguntas/respuestas e imágenes.
+- El sitio incluye SEO técnico por ruta, sitemap, robots, datos estructurados, enlaces rastreables y optimización de imágenes.
+- La publicación está configurada para build estático con CDN y caché inmutable de assets versionados; falta publicar explícitamente y reemplazar el dominio de Preview por el dominio final cuando exista.
