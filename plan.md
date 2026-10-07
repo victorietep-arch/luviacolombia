@@ -75,3 +75,6 @@ Cuenta Luvia muestra una sola vista a la vez: inicio de sesión o registro, con 
 
 ## Banner y sugerencia de búsqueda
 El banner usa cuatro grupos idénticos y se desplaza un cuarto de su ancho total para mantener cobertura continua también en escritorio. La sugerencia inline se oculta inmediatamente mediante estado visual al escribir cualquier carácter.
+
+## Footer editable
+El bloque Contáctanos del footer se administra desde Contenido con frase de marca, teléfono, correo y ubicación persistidos en `site_content` de Supabase.

@@ -40,3 +40,4 @@
 - Banner superior animado con desplazamiento continuo y brillo pulsante.
 - Banner de beneficios sin espacios en escritorio mediante cuatro grupos repetidos.
 - Sugerencia del buscador ocultada en cuanto el usuario escribe.
+- Agregado editor del bloque Contáctanos del footer con frase, teléfono, correo y ubicación.
