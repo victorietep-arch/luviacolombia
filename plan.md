@@ -50,3 +50,6 @@ Se agregan Política de privacidad, Política de cookies, Términos y condicione
 
 ## Contacto, newsletter y panel modular
 Los formularios de contacto y newsletter guardan datos en Supabase mediante inserción pública restringida por RLS. El panel administrativo consulta esas bandejas únicamente para usuarios admin y se divide en pestañas de Productos, Pedidos, Contenido, Mensajes y Suscriptores; los mensajes permiten cambiar estado.
+
+## Redes sociales editables
+El editor de Contenido incluye URLs de Instagram, Facebook, TikTok y YouTube. El footer las convierte en enlaces externos con `target=_blank` y rel="noopener".
