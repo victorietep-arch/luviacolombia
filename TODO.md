@@ -34,3 +34,5 @@
 - Los cambios de estado de pedidos y mensajes ya no desmontan el selector durante la actualización.
 - Corregido el footer móvil para evitar el bloque blanco y mejorar el contraste.
 - Corregida la visibilidad inferior de Edición especial en pantallas pequeñas.
+- Cuenta Luvia creada con inicio de sesión, registro y cierre de sesión mediante Supabase Auth.
+- Contraste móvil reforzado y buscador estabilizado para evitar zoom automático.

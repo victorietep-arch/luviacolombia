@@ -66,3 +66,6 @@ En pantallas móviles, los paneles Liquid Glass elevan opacidad y contraste tipo
 
 ## Ajuste visual móvil final
 El footer móvil usa un gradiente Liquid Glass azul-lila con tipografía oscura y enlaces de redes contrastados. La sección Edición especial separa imagen y contenido con fondo claro, texto oscuro y puntos destacados legibles.
+
+## Cuenta Luvia y móvil
+Se crea la ruta Cuenta Luvia con inicio de sesión y registro usando Supabase Auth, además de una vista de cuenta activa. En móvil se usan colores más saturados y tipografía más contrastada; el buscador mantiene 16px para evitar el zoom automático de iOS.
