@@ -30,3 +30,5 @@
 - Si la bandeja de mensajes no existe en Supabase, el panel indica ejecutar la migración correspondiente.
 - Los mensajes se filtran por Todos, Nuevos, Leídos, Respondidos y Archivados con contadores visibles.
 - Corregido el cambio de estado de mensajes para persistir al seleccionar Respondido, Leído o Archivado.
+- Mejorado el contraste del Liquid Glass en móvil.
+- Los cambios de estado de pedidos y mensajes ya no desmontan el selector durante la actualización.

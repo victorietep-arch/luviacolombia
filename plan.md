@@ -60,3 +60,6 @@ La pestaña Pedidos incluye filtros Todos, Nuevos, Confirmados, Preparando, Envi
 La bandeja de mensajes ahora se organiza con filtros Todos, Nuevos, Leídos, Respondidos y Archivados, cada uno con contador.
 
 El selector de estado de mensajes usa `change`, persiste el estado en Supabase y refresca la bandeja tras guardar.
+
+## Mobile y estados operativos
+En pantallas móviles, los paneles Liquid Glass elevan opacidad y contraste tipográfico sin perder el desenfoque. Los selectores de estado de pedidos y mensajes se deshabilitan solo durante la petición, conservan la selección y revierten con un error visible si Supabase rechaza la actualización; no se reconstruye la pantalla al guardar.
