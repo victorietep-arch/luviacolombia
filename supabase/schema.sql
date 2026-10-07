@@ -139,3 +139,7 @@ create policy "site content admin update" on public.site_content for update to a
 insert into public.site_content (id, content)
 values (1, '{}'::jsonb)
 on conflict (id) do nothing;
+
+-- Permisos explícitos para que el checkout público pueda insertar pedidos.
+grant insert on table public.orders to anon, authenticated;
+grant insert on table public.order_items to anon, authenticated;

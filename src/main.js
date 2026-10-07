@@ -143,6 +143,7 @@ async function saveOrder(form) {
   if (!supabase) return number;
   const shipping = cartTotal() >= 180000 ? 0 : 9900;
   const payload = {
+    id: crypto.randomUUID(),
     order_number: number,
     customer_name: form.get('name'),
     email: form.get('email'),
@@ -154,12 +155,12 @@ async function saveOrder(form) {
     total: cartTotal() + shipping,
     status: 'new'
   };
-  const { data: order, error } = await supabase.from('orders').insert(payload).select('id,order_number').single();
+  const { error } = await supabase.from('orders').insert(payload);
   if (error) throw error;
-  const items = state.cart.map(item => ({ order_id: order.id, product_id: item.id, product_name: item.name, price: item.price, quantity: item.qty, color: item.color, size: item.size, image: item.image }));
+  const items = state.cart.map(item => ({ order_id: payload.id, product_id: item.id, product_name: item.name, price: item.price, quantity: item.qty, color: item.color, size: item.size, image: item.image }));
   const itemResult = await supabase.from('order_items').insert(items);
   if (itemResult.error) throw itemResult.error;
-  return order.order_number;
+  return payload.order_number;
 }
 
 function adminPage() {
