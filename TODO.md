@@ -26,3 +26,5 @@
 - El panel administrativo queda dividido en pestañas y muestra mensajes y suscriptores guardados en Supabase.
 - El formulario de contacto captura el formulario antes del guardado asíncrono para evitar errores de `currentTarget`.
 - Las URLs de Instagram, Facebook, TikTok y YouTube se editan desde Contenido y se muestran en el footer.
+- Los pedidos se filtran y organizan por estado con contadores visibles.
+- Si la bandeja de mensajes no existe en Supabase, el panel indica ejecutar la migración correspondiente.

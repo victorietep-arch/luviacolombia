@@ -53,3 +53,6 @@ Los formularios de contacto y newsletter guardan datos en Supabase mediante inse
 
 ## Redes sociales editables
 El editor de Contenido incluye URLs de Instagram, Facebook, TikTok y YouTube. El footer las convierte en enlaces externos con `target=_blank` y rel="noopener".
+
+## Organización operativa
+La pestaña Pedidos incluye filtros Todos, Nuevos, Confirmados, Preparando, Enviados, Entregados y Cancelados con contadores. La pestaña Mensajes muestra un aviso accionable si la migración de Supabase aún no está aplicada.
