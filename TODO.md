@@ -45,3 +45,5 @@
 - Pedidos cargados automáticamente al entrar al panel administrativo.
 - Página pública /seguimiento con consulta por número LV-AAAA-NNNNNN.
 - Panel de pedidos con estado y número de guía editables.
+- Mi cuenta actualiza el nombre del perfil con Supabase.
+- Favoritos muestra las prendas guardadas y permite quitarlas, en lugar de mostrar solo un contador.

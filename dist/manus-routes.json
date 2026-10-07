@@ -55,6 +55,10 @@
     {
       "path": "/seguimiento",
       "title": "Consultar pedido — Luvia Colombia"
+    },
+    {
+      "path": "/favoritos",
+      "title": "Mis favoritos — Luvia Colombia"
     }
   ]
 }

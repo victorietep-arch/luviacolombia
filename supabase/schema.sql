@@ -84,6 +84,8 @@ alter table public.order_items enable row level security;
 
 drop policy if exists "profiles own read" on public.profiles;
 create policy "profiles own read" on public.profiles for select to authenticated using (id = auth.uid() or public.is_admin());
+drop policy if exists "profiles own update" on public.profiles;
+create policy "profiles own update" on public.profiles for update to authenticated using (id = auth.uid() or public.is_admin()) with check (id = auth.uid() or public.is_admin());
 
 drop policy if exists "products public read active" on public.products;
 create policy "products public read active" on public.products for select to anon, authenticated using (active = true or public.is_admin());
