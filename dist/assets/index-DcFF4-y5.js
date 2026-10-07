@@ -37,7 +37,7 @@ ${y}`}class x extends Error{constructor({message:e,code:r,cause:s,name:a}){var i
       <div class="product-price">${M(t.price)} ${t.oldPrice?`<del>${M(t.oldPrice)}</del>`:""}</div>
       <button class="add-btn" data-action="quick-add" data-id="${t.id}">Añadir al carrito <span>${E("arrow")}</span></button>
     </div>
-  </article>`}function Vn(){return`<div class="topline"><div class="topline-track"><span>${E("truck")} Envíos a toda Colombia</span><i></i><span>Compra segura</span><i></i><span>Cambios y devoluciones</span><i></i><span class="topline-note">Tu estilo, nuestra inspiración <b>♥</b></span><i></i><span>${E("truck")} Envíos a toda Colombia</span><i></i><span>Compra segura</span><i></i><span>Cambios y devoluciones</span></div></div>
+  </article>`}function Vn(){return`<div class="topline"><div class="topline-track"><span class="topline-group"><span>${E("truck")} Envíos a toda Colombia</span><i></i><span>Compra segura</span><i></i><span>Cambios y devoluciones</span><i></i><span class="topline-note">Tu estilo, nuestra inspiración <b>♥</b></span></span><span class="topline-group" aria-hidden="true"><span>${E("truck")} Envíos a toda Colombia</span><i></i><span>Compra segura</span><i></i><span>Cambios y devoluciones</span><i></i><span class="topline-note">Tu estilo, nuestra inspiración <b>♥</b></span></span></div></div>
   <header class="site-header">
     <button class="icon-btn menu-btn" data-action="mobile-nav" aria-label="Abrir menú">${E("menu")}</button>
     <a class="brand" href="/" aria-label="Luvia Colombia inicio"><span>Luvia</span><small>COLOMBIA</small></a>

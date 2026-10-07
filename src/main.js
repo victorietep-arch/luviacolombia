@@ -213,7 +213,7 @@ function productCard(product) {
 }
 
 function header() {
-  return `<div class="topline"><div class="topline-track"><span>${icon('truck')} Envíos a toda Colombia</span><i></i><span>Compra segura</span><i></i><span>Cambios y devoluciones</span><i></i><span class="topline-note">Tu estilo, nuestra inspiración <b>♥</b></span><i></i><span>${icon('truck')} Envíos a toda Colombia</span><i></i><span>Compra segura</span><i></i><span>Cambios y devoluciones</span></div></div>
+  return `<div class="topline"><div class="topline-track"><span class="topline-group"><span>${icon('truck')} Envíos a toda Colombia</span><i></i><span>Compra segura</span><i></i><span>Cambios y devoluciones</span><i></i><span class="topline-note">Tu estilo, nuestra inspiración <b>♥</b></span></span><span class="topline-group" aria-hidden="true"><span>${icon('truck')} Envíos a toda Colombia</span><i></i><span>Compra segura</span><i></i><span>Cambios y devoluciones</span><i></i><span class="topline-note">Tu estilo, nuestra inspiración <b>♥</b></span></span></div></div>
   <header class="site-header">
     <button class="icon-btn menu-btn" data-action="mobile-nav" aria-label="Abrir menú">${icon('menu')}</button>
     <a class="brand" href="/" aria-label="Luvia Colombia inicio"><span>Luvia</span><small>COLOMBIA</small></a>
