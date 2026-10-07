@@ -1,0 +1,10 @@
+# Resultados de Luvia Colombia
+
+- La página de inicio presenta navegación clara, hero de nueva colección, beneficios de compra, categorías Hombre, Mujer, Chaquetas, Camisetas, Pantalones y Accesorios, favoritos o más vendidos, bloque de marca y footer.
+- La identidad visual usa gradientes pastel lila, rosa, azul y blanco, superficies translúcidas, bordes suaves, titulares serif y UI sans-serif.
+- El catálogo es responsive y permite ver productos de Hombre, Mujer, Chaquetas, Camisetas, Pantalones y Accesorios.
+- La búsqueda filtra productos y los filtros por categoría y ordenamiento actualizan el catálogo.
+- La vista de detalle permite galería, precio en COP, talla, color, cantidad y añadir al carrito.
+- El carrito permite editar cantidades, eliminar artículos, ver subtotal y recibir información de envío.
+- El checkout simulado solicita datos de entrega, muestra resumen del pedido y confirma la orden sin procesar pagos reales ni pedir tarjeta.
+- La experiencia funciona en móvil, tableta y escritorio, con navegación consistente, estados visibles y accesibilidad básica.

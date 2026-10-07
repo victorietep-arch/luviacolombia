@@ -1,0 +1,165 @@
+import './styles.css';
+
+const products = [
+  { id:'buzo-oversize', name:'Buzo Oversize Luvia', category:'Mujer', price:89900, oldPrice:109900, tag:'Más vendido', image:'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85'], colors:['Lavanda','Blanco'], sizes:['XS','S','M','L'], description:'Silueta amplia, suave y ligera para acompañarte en todos tus planes. Algodón premium con interior afelpado.' },
+  { id:'camiseta-premium', name:'Camiseta Premium', category:'Camisetas', price:59900, tag:'Esencial', image:'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=900&q=85'], colors:['Negro','Marfil','Azul nube'], sizes:['XS','S','M','L','XL'], description:'La camiseta que resuelve el día. Corte limpio, algodón peinado y una textura que se siente tan bien como se ve.' },
+  { id:'pantalon-cargo', name:'Pantalón Cargo', category:'Pantalones', price:79900, image:'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=900&q=85'], colors:['Azul hielo','Arena'], sizes:['28','30','32','34','36'], description:'Volumen relajado y bolsillos utilitarios para moverte con libertad. Un nuevo clásico para todos los días.' },
+  { id:'chaqueta-puffer', name:'Chaqueta Puffer', category:'Chaquetas', price:129900, tag:'Nueva', image:'https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=85'], colors:['Marfil','Azul noche'], sizes:['S','M','L','XL'], description:'Abrigo liviano con volumen perfecto. Diseñada para las mañanas frías y los atardeceres largos.' },
+  { id:'top-basico', name:'Top Básico', category:'Mujer', price:49900, image:'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=900&q=85'], colors:['Negro','Rosa pétalo','Blanco'], sizes:['XS','S','M','L'], description:'Un básico con intención. Tirantes finos, tacto suave y una silueta que combina con todo.' },
+  { id:'gorra-luvia', name:'Gorra Luvia', category:'Accesorios', price:39900, tag:'Icono', image:'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=85'], colors:['Rosa nube','Negro','Marfil'], sizes:['Única'], description:'El último toque. Visera curva, bordado Luvia y ajuste posterior para llevar tu estilo a todas partes.' },
+  { id:'hoodie-azul', name:'Hoodie Cielo', category:'Hombre', price:99900, image:'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=900&q=85'], colors:['Azul nube','Gris perla'], sizes:['S','M','L','XL'], description:'Un hoodie esencial con una paleta inspirada en el cielo. Suave, amplio y listo para cualquier plan.' },
+  { id:'bolso-mini', name:'Bolso Mini Aura', category:'Accesorios', price:74900, tag:'Edición limitada', image:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=85', gallery:['https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=85','https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=900&q=85'], colors:['Negro','Lila', 'Rosa hielo'], sizes:['Única'], description:'Pequeño por fuera, grande en actitud. Un bolso de líneas curvas para llevar lo esencial.' }
+];
+
+const categories = [
+  {name:'Hombre', image:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=85', subtitle:'Ver colección'},
+  {name:'Mujer', image:'https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=700&q=85', subtitle:'Ver colección'},
+  {name:'Chaquetas', image:'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=85', subtitle:'Ver colección'},
+  {name:'Camisetas', image:'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85', subtitle:'Ver colección'},
+  {name:'Pantalones', image:'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=700&q=85', subtitle:'Ver colección'},
+  {name:'Accesorios', image:'https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?auto=format&fit=crop&w=700&q=85', subtitle:'Ver colección'}
+];
+
+const icons = {
+  menu:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  search:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>',
+  user:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.7-3.1 3-5 7-5s6.3 1.9 7 5"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.8c0 5.1-8.8 10-8.8 10s-8.8-4.9-8.8-10A4.7 4.7 0 0 1 12 6.1a4.7 4.7 0 0 1 8.8 2.7Z"/></svg>',
+  bag:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  chevron:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>',
+  close:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>',
+  truck:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.7"/><circle cx="18" cy="18" r="1.7"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.2-2.9 7.8-7 9-4.1-1.2-7-4.8-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>',
+  refresh:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14-4L4 9m0-5v5h5M4 13a8 8 0 0 0 14 4l2-2m0 5v-5h-5"/></svg>',
+  star:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.7 6.3.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.3-.9L12 3Z"/></svg>'
+};
+const icon = name => icons[name] || '';
+const money = value => new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}).format(value).replace('COP','').trim() + ' COP';
+const state = { search:'', category:'Todos', sort:'featured', cart: JSON.parse(localStorage.getItem('luvia-cart') || '[]'), favorites: JSON.parse(localStorage.getItem('luvia-favorites') || '[]'), detail:null, cartOpen:false, checkout:false, mobileNav:false };
+
+const app = document.querySelector('#app');
+const toastRegion = document.querySelector('#toast-region');
+const saveState = () => { localStorage.setItem('luvia-cart', JSON.stringify(state.cart)); localStorage.setItem('luvia-favorites', JSON.stringify(state.favorites)); };
+const cartCount = () => state.cart.reduce((sum,item)=>sum+item.qty,0);
+const cartTotal = () => state.cart.reduce((sum,item)=>sum+item.price*item.qty,0);
+const toast = message => { const el=document.createElement('div'); el.className='toast'; el.textContent=message; toastRegion.append(el); setTimeout(()=>el.remove(),3200); };
+
+function productCard(product) {
+  const liked = state.favorites.includes(product.id);
+  return `<article class="product-card" data-id="${product.id}">
+    <button class="favorite-btn ${liked?'is-liked':''}" data-action="favorite" data-id="${product.id}" aria-label="${liked?'Quitar de favoritos':'Añadir a favoritos'}">${icon('heart')}</button>
+    <button class="product-image-wrap" data-action="detail" data-id="${product.id}" aria-label="Ver ${product.name}">
+      <img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy">
+      ${product.tag?`<span class="product-tag">${product.tag}</span>`:''}
+    </button>
+    <div class="product-info">
+      <div><p class="product-category">${product.category}</p><h3>${product.name}</h3></div>
+      <div class="product-price">${money(product.price)} ${product.oldPrice?`<del>${money(product.oldPrice)}</del>`:''}</div>
+      <button class="add-btn" data-action="quick-add" data-id="${product.id}">Añadir al carrito <span>${icon('arrow')}</span></button>
+    </div>
+  </article>`;
+}
+
+function header() {
+  return `<div class="topline"><span>${icon('truck')} Envíos a toda Colombia</span><div><span>Compra segura</span><i></i><span>Cambios y devoluciones</span><i></i><span class="topline-note">Tu estilo, nuestra inspiración <b>♥</b></span></div></div>
+  <header class="site-header">
+    <button class="icon-btn menu-btn" data-action="mobile-nav" aria-label="Abrir menú">${icon('menu')}</button>
+    <a class="brand" href="#inicio" aria-label="Luvia Colombia inicio"><span>Luvia</span><small>COLOMBIA</small></a>
+    <nav class="main-nav" aria-label="Navegación principal"><a href="#inicio">Inicio</a><a href="#tienda">Tienda</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a></nav>
+    <div class="header-actions">
+      <label class="search-box">${icon('search')}<input id="global-search" type="search" placeholder="Buscar producto..." value="${state.search}" aria-label="Buscar productos"></label>
+      <button class="icon-btn desktop-only" data-action="account" aria-label="Mi cuenta">${icon('user')}</button>
+      <button class="icon-btn desktop-only" data-action="favorites" aria-label="Favoritos">${icon('heart')}</button>
+      <button class="bag-btn" data-action="open-cart" aria-label="Abrir carrito">${icon('bag')}<span class="bag-count">${cartCount()}</span></button>
+    </div>
+  </header>`;
+}
+
+function homePage() {
+  const featured = products.slice(0,6);
+  return `<main>
+    <section class="hero section-shell" id="inicio">
+      <div class="hero-copy"><span class="eyebrow pill">NUEVA COLECCIÓN <b>✦</b></span><h1>Luce increíble,<br><em>siempre.</em></h1><p>Ropa que se adapta a tu estilo, a tu ritmo,<br class="desktop-only"> y a cada momento de tu vida.</p><button class="primary-btn" data-action="scroll-store">Comprar ahora ${icon('arrow')}</button><span class="hand-note">Moda<br>que te<br>acompaña <b>♡</b></span></div>
+      <div class="hero-visual"><div class="hero-glow"></div><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1300&q=90" alt="Modelos luciendo la nueva colección Luvia" fetchpriority="high"><div class="hero-slide-count"><b>01</b><span></span>03</div></div>
+      <button class="hero-arrow prev" aria-label="Anterior">←</button><button class="hero-arrow next" aria-label="Siguiente">→</button>
+    </section>
+    <section class="benefits section-shell" aria-label="Beneficios de compra">
+      ${[['truck','Envíos a toda Colombia','Rápidos y seguros'],['shield','Compra segura','Tus datos protegidos'],['refresh','Cambios y devoluciones','Sin complicaciones'],['star','Calidad garantizada','En cada prenda']].map(([i,t,s])=>`<div class="benefit"><span class="benefit-icon">${icon(i)}</span><div><strong>${t}</strong><small>${s}</small></div></div>`).join('')}
+    </section>
+    <section class="categories section-shell" id="tienda"><div class="section-heading"><div><span class="eyebrow">CATEGORÍAS</span><h2>Encuentra tu estilo</h2><p>Explora nuestras categorías y descubre lo que va contigo.</p></div><button class="outline-btn" data-action="browse-all">Ver todas ${icon('arrow')}</button></div><div class="category-rail">${categories.map(c=>`<button class="category-card" data-action="category" data-category="${c.name}"><img src="${c.image}" alt="Categoría ${c.name}" loading="lazy"><span class="category-overlay"></span><div><h3>${c.name}</h3><small>${c.subtitle} ${icon('arrow')}</small></div></button>`).join('')}</div></section>
+    <section class="editorial section-shell"><div class="editorial-photo"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1300&q=85" alt="Detalle de texturas Luvia" loading="lazy"><span class="editorial-label">EDICIÓN ESPECIAL <b>✦</b></span></div><div class="editorial-copy"><span class="eyebrow">LA DIFERENCIA ESTÁ EN LOS DETALLES</span><h2>Detalles que<br><em>hacen la diferencia</em></h2><p>Calidad, comodidad y diseño en cada prenda. Creamos piezas para acompañarte hoy y mucho después.</p><button class="primary-btn" data-action="browse-all">Ver colección ${icon('arrow')}</button><div class="editorial-points"><span>${icon('shield')} Materiales premium</span><span>${icon('star')} Diseños exclusivos</span><span>${icon('refresh')} Comodidad todo el día</span></div></div></section>
+    <section class="featured section-shell"><div class="section-heading"><div><span class="eyebrow">MÁS VENDIDOS</span><h2>Nuestros favoritos</h2><p>Los looks que todos están eligiendo.</p></div><button class="outline-btn" data-action="browse-all">Ver todos los productos ${icon('arrow')}</button></div><div class="products-grid">${featured.map(productCard).join('')}</div></section>
+    <section class="about section-shell" id="nosotros"><div class="about-image"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85" alt="Prendas Luvia en un espacio luminoso" loading="lazy"><div class="about-wordmark">Luvia<small>COLOMBIA</small></div></div><div class="about-copy"><span class="eyebrow">SOBRE NOSOTROS</span><h2>Luvia Colombia</h2><p>Somos una marca de ropa creada para personas que aman la moda, la libertad y la autenticidad. En Luvia creemos que cada prenda cuenta una historia, y queremos que la tuya también sea increíble.</p><button class="text-btn" data-action="about">Conoce más ${icon('arrow')}</button><span class="hand-note about-note">Más que ropa,<br>es actitud <b>♡</b></span></div></section>
+  </main>`;
+}
+
+function storePage() {
+  let shown = products.filter(p => (state.category==='Todos'||p.category===state.category) && p.name.toLowerCase().includes(state.search.toLowerCase()));
+  if(state.sort==='price-low') shown.sort((a,b)=>a.price-b.price); if(state.sort==='price-high') shown.sort((a,b)=>b.price-a.price); if(state.sort==='name') shown.sort((a,b)=>a.name.localeCompare(b.name));
+  return `<main class="store-page section-shell"><div class="store-intro"><div><span class="eyebrow">LA TIENDA</span><h1>Encuentra tu próximo <em>favorito.</em></h1><p>Piezas para vestir tus días con color, comodidad y personalidad.</p></div><div class="store-count">${shown.length} ${shown.length===1?'producto':'productos'}</div></div><div class="store-toolbar"><div class="filter-pills">${['Todos','Hombre','Mujer','Chaquetas','Camisetas','Pantalones','Accesorios'].map(c=>`<button class="filter-pill ${state.category===c?'active':''}" data-action="filter" data-category="${c}">${c}</button>`).join('')}</div><label class="sort-select"><span>Ordenar por</span><select id="sort-products"><option value="featured" ${state.sort==='featured'?'selected':''}>Destacados</option><option value="price-low" ${state.sort==='price-low'?'selected':''}>Precio: menor a mayor</option><option value="price-high" ${state.sort==='price-high'?'selected':''}>Precio: mayor a menor</option><option value="name" ${state.sort==='name'?'selected':''}>Nombre A-Z</option></select>${icon('chevron')}</label></div><div class="products-grid store-grid">${shown.length?shown.map(productCard).join(''):`<div class="empty-state"><span>${icon('search')}</span><h2>No encontramos ese look</h2><p>Prueba otra búsqueda o explora toda la colección.</p><button class="primary-btn" data-action="clear-search">Ver toda la tienda ${icon('arrow')}</button></div>`}</div></main>`;
+}
+
+function detailModal() {
+  if(!state.detail) return '';
+  const p=products.find(item=>item.id===state.detail); if(!p)return '';
+  return `<div class="modal-backdrop" data-action="close-detail"><section class="detail-modal" role="dialog" aria-modal="true" aria-label="Detalle de ${p.name}" data-stop="true"><button class="modal-close" data-action="close-detail" aria-label="Cerrar">${icon('close')}</button><div class="detail-gallery"><img id="detail-main-image" src="${p.gallery[0]}" alt="${p.name}"><div>${p.gallery.map((img,i)=>`<button class="thumb ${i===0?'active':''}" data-action="thumb" data-image="${img}"><img src="${img}" alt="Vista ${i+1} de ${p.name}"></button>`).join('')}</div></div><div class="detail-copy"><span class="eyebrow">${p.category} ${p.tag?`· ${p.tag}`:''}</span><h2>${p.name}</h2><div class="detail-rating">★★★★★ <span>4.9 (28 reseñas)</span></div><p class="detail-price">${money(p.price)} ${p.oldPrice?`<del>${money(p.oldPrice)}</del>`:''}</p><p class="detail-description">${p.description}</p><div class="option-group"><div><strong>Color</strong><span id="selected-color">${p.colors[0]}</span></div><div class="swatches">${p.colors.map((c,i)=>`<button class="swatch ${i===0?'active':''}" style="--swatch:${c==='Negro'?'#1e2535':c==='Blanco'||c==='Marfil'?'#f4f2ef':c==='Rosa pétalo'||c==='Rosa nube'?'#e7a8bd':c==='Azul noche'?'#32476e':c==='Lila'||c==='Lavanda'?'#b4a8dc':c==='Arena'?'#c7b9a3':'#9eb8dc'}" data-action="color" data-color="${c}" aria-label="${c}"></button>`).join('')}</div></div><div class="option-group"><div><strong>Talla</strong><button class="size-guide" type="button">Guía de tallas</button></div><div class="size-options">${p.sizes.map((s,i)=>`<button class="size-option ${i===1?'active':''}" data-action="size" data-size="${s}">${s}</button>`).join('')}</div></div><div class="detail-actions"><div class="qty-control"><button data-action="detail-qty" data-change="-1" aria-label="Disminuir cantidad">−</button><span id="detail-qty">1</span><button data-action="detail-qty" data-change="1" aria-label="Aumentar cantidad">+</button></div><button class="primary-btn add-detail" data-action="detail-add" data-id="${p.id}">Añadir al carrito ${icon('bag')}</button></div><div class="detail-perks"><span>${icon('truck')} Envío gratis desde $180.000</span><span>${icon('refresh')} Cambios fáciles en 30 días</span></div></div></section></div>`;
+}
+
+function cartDrawer() {
+  const shipping=cartTotal()>=180000||cartTotal()===0?0:9900; const total=cartTotal()+shipping;
+  return `<div class="drawer-backdrop ${state.cartOpen?'is-open':''}" data-action="close-cart"><aside class="cart-drawer" data-stop="true" aria-label="Carrito de compras"><div class="drawer-head"><div><span class="eyebrow">TU SELECCIÓN</span><h2>Carrito <small>(${cartCount()})</small></h2></div><button class="modal-close" data-action="close-cart" aria-label="Cerrar carrito">${icon('close')}</button></div>${state.cart.length?`<div class="cart-items">${state.cart.map(item=>`<div class="cart-item"><img src="${item.image}" alt="${item.name}"><div class="cart-item-info"><h3>${item.name}</h3><span>${item.color||'Color seleccionado'} · ${item.size||'Talla única'}</span><strong>${money(item.price)}</strong><div class="cart-item-bottom"><div class="qty-control"><button data-action="cart-qty" data-id="${item.id}" data-change="-1">−</button><span>${item.qty}</span><button data-action="cart-qty" data-id="${item.id}" data-change="1">+</button></div><button class="remove-btn" data-action="remove-cart" data-id="${item.id}">Eliminar</button></div></div></div>`).join('')}</div><div class="shipping-progress"><div class="progress-label"><span>${shipping===0?'¡Envío gratis desbloqueado!':'Te faltan '+money(180000-cartTotal())+' para envío gratis'}</span><span>✦</span></div><div class="progress-track"><span style="width:${Math.min(100,cartTotal()/180000*100)}%"></span></div></div><div class="drawer-summary"><div><span>Subtotal</span><strong>${money(cartTotal())}</strong></div><div><span>Envío</span><strong>${shipping===0?'Gratis':money(shipping)}</strong></div><div class="total-row"><span>Total</span><strong>${money(total)}</strong></div><button class="primary-btn full-btn" data-action="checkout">Continuar al checkout ${icon('arrow')}</button><p class="secure-note">${icon('shield')} Compra segura · pago simulado</p></div>`:`<div class="empty-cart"><div class="empty-bag">${icon('bag')}</div><h3>Tu carrito está esperando</h3><p>Agrega tus favoritos y vuelve aquí cuando estés lista.</p><button class="primary-btn" data-action="close-cart">Explorar colección ${icon('arrow')}</button></div>`}</aside></div>`;
+}
+
+function checkoutModal() {
+  if(!state.checkout) return '';
+  const shipping=cartTotal()>=180000?0:9900;
+  return `<div class="modal-backdrop checkout-backdrop"><section class="checkout-modal" role="dialog" aria-modal="true" aria-label="Checkout"><button class="modal-close" data-action="close-checkout" aria-label="Cerrar">${icon('close')}</button><div class="checkout-head"><span class="eyebrow">ÚLTIMO PASO</span><h2>Tu pedido, <em>en camino.</em></h2><p>Completa tus datos de entrega. No se realizará ningún cobro.</p></div><div class="checkout-layout"><form id="checkout-form" class="checkout-form"><div class="form-section"><h3>Datos de entrega</h3><div class="form-grid"><label>Nombre completo<input name="name" required placeholder="Tu nombre" autocomplete="name"></label><label>Correo electrónico<input name="email" type="email" required placeholder="tu@email.com" autocomplete="email"></label><label class="full-field">Dirección<input name="address" required placeholder="Calle, carrera, número" autocomplete="street-address"></label><label>Ciudad<input name="city" required placeholder="Bogotá" autocomplete="address-level2"></label><label>Teléfono<input name="phone" required placeholder="300 000 0000" autocomplete="tel"></label></div></div><div class="form-section"><h3>Preferencias</h3><label class="check-label"><input type="checkbox" name="updates" checked><span>Quiero recibir novedades y lanzamientos de Luvia</span></label></div><button class="primary-btn full-btn" type="submit">Confirmar pedido ${icon('arrow')}</button><p class="secure-note">${icon('shield')} Tus datos están protegidos. Checkout de demostración.</p></form><aside class="checkout-summary"><span class="eyebrow">RESUMEN</span><h3>${cartCount()} ${cartCount()===1?'artículo':'artículos'}</h3><div>${state.cart.map(item=>`<div class="summary-item"><img src="${item.image}" alt=""><span>${item.name} <small>x${item.qty}</small></span><strong>${money(item.price*item.qty)}</strong></div>`).join('')}</div><hr><div><span>Subtotal</span><strong>${money(cartTotal())}</strong></div><div><span>Envío</span><strong>${shipping?'$9.900 COP':'Gratis'}</strong></div><div class="total-row"><span>Total</span><strong>${money(cartTotal()+shipping)}</strong></div></aside></div></section></div>`;
+}
+
+function confirmationModal(orderNumber='LV-2026-1007') { return `<div class="modal-backdrop"><section class="confirmation-modal" role="dialog" aria-modal="true"><div class="confirmation-mark">${icon('star')}</div><span class="eyebrow">PEDIDO CONFIRMADO</span><h2>Gracias por elegir <em>Luvia.</em></h2><p>Tu orden <strong>${orderNumber}</strong> quedó registrada en modo demostración. Te enviaremos los detalles a tu correo.</p><button class="primary-btn" data-action="finish-order">Seguir explorando ${icon('arrow')}</button><span class="hand-note">hecho con cariño <b>♡</b></span></section></div>`; }
+
+function render() {
+  const hashPath=location.hash.replace('#','').split('?')[0];
+  const urlPath=location.pathname.replace(/^\//,'').split('?')[0];
+  const path=hashPath || urlPath;
+  const page = state.checkout ? homePage() : (path==='tienda'?storePage():homePage());
+  app.innerHTML = header()+page+footer()+detailModal()+cartDrawer()+checkoutModal();
+  bindEvents();
+}
+function footer() { return `<footer class="site-footer" id="contacto"><div class="footer-brand"><a class="brand" href="#inicio"><span>Luvia</span><small>COLOMBIA</small></a><p>Moda que se adapta a ti.</p></div><div class="footer-col"><strong>Enlaces rápidos</strong><a href="#inicio">Inicio</a><a href="#tienda">Tienda</a><a href="#nosotros">Nosotros</a><a href="#contacto">Contacto</a></div><div class="footer-col"><strong>Ayuda</strong><a href="#contacto">Envíos y entregas</a><a href="#contacto">Cambios y devoluciones</a><a href="#contacto">Preguntas frecuentes</a><a href="#contacto">Términos y condiciones</a></div><div class="footer-col contact-col"><strong>Contáctanos</strong><span>✆ +57 300 123 4567</span><span>✉ hola@luvia.com</span><span>⌖ Colombia</span></div><div class="footer-news"><strong>Síguenos</strong><div class="socials"><button aria-label="Instagram">◎</button><button aria-label="Facebook">f</button><button aria-label="TikTok">♪</button><button aria-label="YouTube">▶</button></div><label>Suscríbete y recibe novedades<input type="email" placeholder="Tu correo electrónico"><button aria-label="Suscribirse">→</button></label></div><div class="footer-bottom"><span>© 2026 Luvia Colombia. Todos los derechos reservados.</span><span>Hecho para vestir tu ritmo.</span></div></footer>`; }
+
+function addToCart(id, qty=1, options={}) { const p=products.find(item=>item.id===id); if(!p)return; const key=id+'-'+(options.color||p.colors[0])+'-'+(options.size||p.sizes[0]); const found=state.cart.find(item=>item.key===key); if(found)found.qty+=qty; else state.cart.push({key,id,name:p.name,price:p.price,image:p.image,qty,color:options.color||p.colors[0],size:options.size||p.sizes[0]}); saveState(); state.cartOpen=true; state.detail=null; render(); toast(`${p.name} se añadió a tu carrito`); }
+function bindEvents() {
+  document.querySelectorAll('[data-action]').forEach(el=>el.addEventListener('click', e=>{ const target=e.currentTarget, action=target.dataset.action; if((action==='close-detail'||action==='close-cart') && e.target.closest('[data-stop="true"]'))return;
+    if(action==='open-cart'){state.cartOpen=true;render();}
+    if(action==='close-cart'){state.cartOpen=false;render();}
+    if(action==='mobile-nav'){document.querySelector('.main-nav')?.classList.toggle('is-open');}
+    if(action==='detail'){state.detail=target.dataset.id;render();}
+    if(action==='close-detail'){state.detail=null;render();}
+    if(action==='thumb'){document.querySelector('#detail-main-image').src=target.dataset.image; document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));target.classList.add('active');}
+    if(action==='favorite'){const id=target.dataset.id; state.favorites=state.favorites.includes(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id];saveState();render();toast(state.favorites.includes(id)?'Guardado en tus favoritos':'Quitado de tus favoritos');}
+    if(action==='quick-add'){addToCart(target.dataset.id);}
+    if(action==='detail-add'){const color=document.querySelector('.swatch.active')?.dataset.color, size=document.querySelector('.size-option.active')?.dataset.size, qty=Number(document.querySelector('#detail-qty')?.textContent||1);addToCart(target.dataset.id,qty,{color,size});}
+    if(action==='detail-qty'){const el=document.querySelector('#detail-qty');el.textContent=Math.max(1,Number(el.textContent)+Number(target.dataset.change));}
+    if(action==='color'){document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('active'));target.classList.add('active');document.querySelector('#selected-color').textContent=target.dataset.color;}
+    if(action==='size'){document.querySelectorAll('.size-option').forEach(s=>s.classList.remove('active'));target.classList.add('active');}
+    if(action==='cart-qty'){const item=state.cart.find(i=>i.id===target.dataset.id);if(item){item.qty=Math.max(1,item.qty+Number(target.dataset.change));saveState();render();}}
+    if(action==='remove-cart'){state.cart=state.cart.filter(i=>i.id!==target.dataset.id);saveState();render();toast('Producto eliminado del carrito');}
+    if(action==='checkout'){if(!state.cart.length){toast('Agrega productos antes de continuar');return;}state.cartOpen=false;state.checkout=true;render();}
+    if(action==='close-checkout'){state.checkout=false;render();}
+    if(action==='finish-order'){state.checkout=false;state.cart=[];saveState();render();}
+    if(action==='browse-all'){location.hash='tienda';state.category='Todos';render();window.scrollTo({top:0,behavior:'smooth'});}
+    if(action==='category'||action==='filter'){state.category=target.dataset.category;location.hash='tienda';render();window.scrollTo({top:0,behavior:'smooth'});}
+    if(action==='clear-search'){state.search='';render();}
+    if(action==='scroll-store'){location.hash='tienda';render();window.scrollTo({top:0,behavior:'smooth'});}
+    if(action==='account'){toast('Próximamente: tu cuenta Luvia');}
+    if(action==='favorites'){toast(state.favorites.length?`Tienes ${state.favorites.length} favoritos guardados`:'Aún no tienes favoritos');}
+    if(action==='about'){toast('Luvia nace en Colombia para vestir tu ritmo.');}
+  }));
+  document.querySelector('#global-search')?.addEventListener('input', e=>{state.search=e.target.value; if(location.hash!=='#tienda')location.hash='tienda'; render(); const input=document.querySelector('#global-search');input?.focus();input?.setSelectionRange(input.value.length,input.value.length);});
+  document.querySelector('#sort-products')?.addEventListener('change', e=>{state.sort=e.target.value;render();});
+  document.querySelector('#checkout-form')?.addEventListener('submit', e=>{e.preventDefault();const form=new FormData(e.currentTarget);if(!form.get('name')||!form.get('email')||!form.get('address')||!form.get('city')||!form.get('phone'))return;document.querySelector('.checkout-modal')?.parentElement?.remove();app.insertAdjacentHTML('beforeend',confirmationModal('LV-'+Date.now().toString().slice(-6)));document.querySelector('[data-action="finish-order"]')?.addEventListener('click',()=>{state.checkout=false;state.cart=[];saveState();render();});});
+}
+window.addEventListener('hashchange',()=>{ if(!state.checkout){state.detail=null;render();window.scrollTo({top:0,behavior:'smooth'});}});
+render();
