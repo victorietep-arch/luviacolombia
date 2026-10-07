@@ -41,3 +41,7 @@
 - Banner de beneficios sin espacios en escritorio mediante cuatro grupos repetidos.
 - Sugerencia del buscador ocultada en cuanto el usuario escribe.
 - Agregado editor del bloque Contáctanos del footer con frase, teléfono, correo y ubicación.
+- Productos del administrador conservados ante errores de consultas auxiliares.
+- Pedidos cargados automáticamente al entrar al panel administrativo.
+- Página pública /seguimiento con consulta por número LV-AAAA-NNNNNN.
+- Panel de pedidos con estado y número de guía editables.

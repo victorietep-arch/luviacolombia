@@ -78,3 +78,6 @@ El banner usa cuatro grupos idénticos y se desplaza un cuarto de su ancho total
 
 ## Footer editable
 El bloque Contáctanos del footer se administra desde Contenido con frase de marca, teléfono, correo y ubicación persistidos en `site_content` de Supabase.
+
+## Pedidos, sincronización y seguimiento
+La carga administrativa conserva los datos previos cuando una consulta auxiliar falla y se inicializa automáticamente al entrar en `/admin`. La nueva ruta `/seguimiento` consulta de forma pública y limitada el estado, transportadora y número de guía mediante la función segura `track_order`. El panel permite cambiar estado y guardar la guía.
