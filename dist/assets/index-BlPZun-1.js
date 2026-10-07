@@ -41,7 +41,7 @@ ${b}`}class x extends Error{constructor({message:e,code:r,cause:s,name:a}){var i
   <header class="site-header">
     <button class="icon-btn menu-btn" data-action="mobile-nav" aria-label="Abrir menú">${E("menu")}</button>
     <a class="brand" href="/" aria-label="Luvia Colombia inicio"><span>Luvia</span><small>COLOMBIA</small></a>
-    <nav class="main-nav" aria-label="Navegación principal"><a href="/">Inicio</a><a href="/tienda">Tienda</a><a href="/nosotros">Nosotros</a><a href="/contacto">Contacto</a></nav>
+    <nav class="main-nav" aria-label="Navegación principal"><a href="/">Inicio</a><a href="/tienda">Tienda</a><a href="/nosotros">Nosotros</a><a href="/contacto">Contacto</a><a href="/seguimiento">Rastrear pedido</a></nav>
     <div class="header-actions">
       <form id="global-search-form" class="search-box ${g.searchDraft||g.search?"has-value":""}" role="search">${E("search")}<span class="search-typing-hint" aria-hidden="true">buzo oversize</span><input id="global-search" type="search" placeholder="" value="${g.searchDraft||g.search}" aria-label="Buscar productos"><button class="search-submit" type="submit" aria-label="Buscar">${E("arrow")}</button></form>
       <button class="icon-btn" data-action="account" aria-label="Mi cuenta">${E("user")}</button>
