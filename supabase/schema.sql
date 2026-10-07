@@ -35,6 +35,8 @@ create table if not exists public.orders (
   phone text not null,
   address text not null,
   city text not null,
+  payment_method text not null default 'contraentrega',
+  shipping_carrier text not null default 'Interrapidísimo',
   subtotal integer not null default 0,
   shipping integer not null default 0,
   total integer not null default 0,
@@ -143,3 +145,7 @@ on conflict (id) do nothing;
 -- Permisos explícitos para que el checkout público pueda insertar pedidos.
 grant insert on table public.orders to anon, authenticated;
 grant insert on table public.order_items to anon, authenticated;
+
+-- Compatibilidad para proyectos que ya tenían la tabla orders creada.
+alter table public.orders add column if not exists payment_method text not null default 'contraentrega';
+alter table public.orders add column if not exists shipping_carrier text not null default 'Interrapidísimo';
