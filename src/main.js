@@ -319,7 +319,7 @@ function checkoutModal(force=false) {
 
 function confirmationModal(orderNumber='LV-2026-1007') { return `<div class="modal-backdrop"><section class="confirmation-modal" role="dialog" aria-modal="true"><div class="confirmation-mark">${icon('star')}</div><span class="eyebrow">PEDIDO CONFIRMADO</span><h2>Gracias por elegir <em>Luvia.</em></h2><p>Tu orden <strong>${orderNumber}</strong> ha sido recibida correctamente. Te enviaremos los detalles a tu correo.</p><button class="primary-btn" data-action="finish-order">Seguir explorando ${icon('arrow')}</button><span class="hand-note">hecho con cariño <b>♡</b></span></section></div>`; }
 
-const seoOrigin = 'https://8328-i6g4bpvfoosgprmnytv4b-a565cc95.us4.manus.computer';
+const seoOrigin = 'https://luviacolombia.vercel.app';
 const seoRoutes = {
   '': {title:'Luvia Colombia | Moda que se adapta a ti', description:'Descubre ropa, accesorios y nuevas colecciones de Luvia Colombia. Compra moda con envío a toda Colombia, pago contraentrega y cambios fáciles.'},
   tienda: {title:'Tienda de ropa | Luvia Colombia', description:'Explora la tienda de Luvia Colombia: buzos, camisetas, chaquetas, pantalones y accesorios con envío a toda Colombia.'},
