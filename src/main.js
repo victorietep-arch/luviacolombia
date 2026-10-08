@@ -210,7 +210,7 @@ function productCard(product) {
       ${product.tag?`<span class="product-tag">${product.tag}</span>`:''}
     </button>
     <div class="product-info">
-      <div><p class="product-category">${product.category}</p><h3>${product.name}</h3><a class="product-url" href="/producto/${encodeURIComponent(product.id)}">Ver producto</a></div>
+      <div><p class="product-category">${product.category}</p><h3>${product.name}</h3><a class="product-url" href="/producto/${encodeURIComponent(product.slug||product.id)}">Ver producto</a></div>
       <div class="product-price">${money(product.price)} ${product.oldPrice?`<del>${money(product.oldPrice)}</del>`:''}</div>
       <button class="add-btn" data-action="quick-add" data-id="${product.id}">Añadir al carrito <span>${icon('arrow')}</span></button>
     </div>
@@ -341,7 +341,7 @@ function setMeta(name, content, attribute='name') { let tag=document.head.queryS
 function updateSeo(path) {
   const key=path||'';
   const productMatch=key.match(/^producto\/([^/]+)$/);
-  const product=productMatch ? products.find(item=>item.id===decodeURIComponent(productMatch[1])) : (state.detail ? products.find(item=>item.id===state.detail) : null);
+  const product=productMatch ? products.find(item=>item.id===decodeURIComponent(productMatch[1])||item.slug===decodeURIComponent(productMatch[1])) : (state.detail ? products.find(item=>item.id===state.detail) : null);
   const data=seoRoutes[key]||seoRoutes[''];
   const title=product ? `${product.name} | Luvia Colombia` : data.title;
   const description=product?.description||data.description;
@@ -362,7 +362,7 @@ function updateSeo(path) {
   setMeta('twitter:image',product?.image||`${seoOrigin}/luvia-reference-hero.webp`);
   let canonical=document.head.querySelector('link[rel="canonical"]'); if(!canonical){canonical=document.createElement('link');canonical.rel='canonical';document.head.appendChild(canonical);} canonical.href=`${seoOrigin}${canonicalPath}`;
   let jsonld=document.head.querySelector('#luvia-jsonld'); if(!jsonld){jsonld=document.createElement('script');jsonld.id='luvia-jsonld';jsonld.type='application/ld+json';document.head.appendChild(jsonld);}
-  const structured=product ? {'@context':'https://schema.org','@type':'Product',name:product.name,description:product.description,image:product.gallery||[product.image],url:`${seoOrigin}/producto/${encodeURIComponent(product.id)}`,offers:{'@type':'Offer',priceCurrency:'COP',price:String(product.price),availability:'https://schema.org/InStock',url:`${seoOrigin}/producto/${encodeURIComponent(product.id)}`}} : key==='tienda' ? { '@context':'https://schema.org','@type':'ItemList',name:'Tienda Luvia Colombia',itemListElement:products.slice(0,24).map((item,index)=>({'@type':'ListItem',position:index+1,name:item.name,url:`${seoOrigin}/producto/${encodeURIComponent(item.id)}`}))} : {'@context':'https://schema.org','@type':'Organization',name:'Luvia Colombia',url:seoOrigin,logo:`${seoOrigin}/luvia-reference-hero.webp`,description:seoRoutes[''].description};
+  const structured=product ? {'@context':'https://schema.org','@type':'Product',name:product.name,description:product.description,image:product.gallery||[product.image],url:`${seoOrigin}/producto/${encodeURIComponent(product.slug||product.id)}`,offers:{'@type':'Offer',priceCurrency:'COP',price:String(product.price),availability:'https://schema.org/InStock',url:`${seoOrigin}/producto/${encodeURIComponent(product.slug||product.id)}`}} : key==='tienda' ? { '@context':'https://schema.org','@type':'ItemList',name:'Tienda Luvia Colombia',itemListElement:products.slice(0,24).map((item,index)=>({'@type':'ListItem',position:index+1,name:item.name,url:`${seoOrigin}/producto/${encodeURIComponent(item.id)}`}))} : {'@context':'https://schema.org','@type':'Organization',name:'Luvia Colombia',url:seoOrigin,logo:`${seoOrigin}/luvia-reference-hero.webp`,description:seoRoutes[''].description};
   jsonld.textContent=JSON.stringify(structured);
 }
 
@@ -374,7 +374,7 @@ function render() {
   const path=hashPath || urlPath;
   const checkoutRoute=path==='checkout';
   const productMatch=path.match(/^producto\/([^/]+)$/);
-  const sharedProduct=productMatch ? products.find(item=>item.id===decodeURIComponent(productMatch[1])) : null;
+  const sharedProduct=productMatch ? products.find(item=>item.id===decodeURIComponent(productMatch[1])||item.slug===decodeURIComponent(productMatch[1])) : null;
   if(sharedProduct) state.detail=sharedProduct.id;
   const infoRoutes=['nosotros','contacto','envios','cambios','faq','terminos','privacidad','cookies'];
   const page = state.checkout || checkoutRoute ? homePage() : sharedProduct?storePage():path==='tienda'?storePage():path==='admin'?adminPage():path==='cuenta'?accountPage():path==='favoritos'?favoritesPage():path==='seguimiento'?trackingPage():infoRoutes.includes(path)?infoPage(path):homePage();
@@ -393,7 +393,7 @@ function bindEvents() {
     if(action==='mobile-nav'){document.querySelector('.main-nav')?.classList.toggle('is-open');}
     if(action==='detail'){state.detail=target.dataset.id;render();}
     if(action==='close-detail'){if(location.pathname.startsWith('/producto/')){history.pushState({},'', '/tienda');}state.detail=null;render();}
-    if(action==='share-product'){const id=target.dataset.id;const product=products.find(item=>item.id===id);const url=`${location.origin}/producto/${encodeURIComponent(id)}`;if(navigator.share){navigator.share({title:`${product?.name||'Producto'} | Luvia Colombia`,text:product?.description||'Mira este producto de Luvia Colombia.',url}).catch(()=>{});}else{navigator.clipboard?.writeText(url).then(()=>toast('Enlace del producto copiado')).catch(()=>toast(url));}}
+    if(action==='share-product'){const id=target.dataset.id;const product=products.find(item=>item.id===id);const url=`${location.origin}/producto/${encodeURIComponent(product?.slug||id)}`;if(navigator.share){navigator.share({title:`${product?.name||'Producto'} | Luvia Colombia`,text:product?.description||'Mira este producto de Luvia Colombia.',url}).catch(()=>{});}else{navigator.clipboard?.writeText(url).then(()=>toast('Enlace del producto copiado')).catch(()=>toast(url));}}
     if(action==='thumb'){document.querySelector('#detail-main-image').src=target.dataset.image; document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));target.classList.add('active');}
     if(action==='favorite'){const id=target.dataset.id; state.favorites=state.favorites.includes(id)?state.favorites.filter(x=>x!==id):[...state.favorites,id];saveState();render();toast(state.favorites.includes(id)?'Guardado en tus favoritos':'Quitado de tus favoritos');}
     if(action==='quick-add'){addToCart(target.dataset.id);}
