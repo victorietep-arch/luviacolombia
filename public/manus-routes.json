@@ -59,6 +59,10 @@
     {
       "path": "/favoritos",
       "title": "Mis favoritos — Luvia Colombia"
+    },
+    {
+      "path": "/producto/:id",
+      "title": "Detalle de producto — Luvia Colombia"
     }
   ]
 }

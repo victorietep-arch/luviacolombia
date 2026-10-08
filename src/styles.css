@@ -52,3 +52,4 @@ body:after{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;b
   .modal-backdrop:has(.detail-modal) .detail-modal{width:100%!important;max-height:none!important;min-height:calc(100vh - 20px);overflow:visible!important;margin:0 auto}
   .modal-backdrop:has(.detail-modal) .detail-copy{padding-bottom:34px}
 }
+.product-url{display:inline-block;margin-top:6px;color:#6d82b6;font-size:8px;text-decoration:none;border-bottom:1px solid rgba(109,130,182,.35)}.product-url:hover{color:#d17fb5}.share-product{width:100%;margin-top:8px;padding:9px 12px;font-size:9px}

@@ -10,5 +10,13 @@
   <url><loc>https://luviacolombia.vercel.app/terminos</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://luviacolombia.vercel.app/privacidad</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://luviacolombia.vercel.app/cookies</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://luviacolombia.vercel.app/seguimiento</loc></url>
+  <url><loc>https://luviacolombia.vercel.app/seguimiento</loc><changefreq>weekly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://luviacolombia.vercel.app/producto/buzo-oversize</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://luviacolombia.vercel.app/producto/camiseta-premium</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://luviacolombia.vercel.app/producto/pantalon-cargo</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://luviacolombia.vercel.app/producto/chaqueta-puffer</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://luviacolombia.vercel.app/producto/top-basico</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://luviacolombia.vercel.app/producto/gorra-luvia</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://luviacolombia.vercel.app/producto/hoodie-azul</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://luviacolombia.vercel.app/producto/bolso-mini</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
